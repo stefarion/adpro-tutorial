@@ -35,4 +35,18 @@ public class ProductController {
         model.addAttribute("products", allProducts);
         return "productList";
     }
+
+    @GetMapping("/edit/{productId}")
+    public String editProductForm(@PathVariable("productId") String productId, Model model) {
+        Product product = service.getProductById(productId); // Fetch product by UUID
+        model.addAttribute("product", product);
+        return "editProduct";
+    }
+
+    @PostMapping("/edit")
+    public String updateProduct(@ModelAttribute Product product) {
+        service.updateProduct(product); // Service layer handles the update
+        return "redirect:/product/list"; // Redirect to the product listing page
+    }
+
 }
