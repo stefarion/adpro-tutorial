@@ -3,17 +3,16 @@ package id.ac.ui.cs.advprog.eshop.repository;
 import id.ac.ui.cs.advprog.eshop.model.Product;
 import org.springframework.stereotype.Repository;
 
+import jakarta.validation.Valid;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.UUID;
 
 @Repository
 public class ProductRepository {
     private List<Product> productData = new ArrayList<>();
 
-    public Product create(Product product) {
-        product.setProductId(UUID.randomUUID().toString());
+    public Product create(@Valid Product product) {
         productData.add(product);
         return product;
     }
@@ -31,6 +30,9 @@ public class ProductRepository {
 
     public Product updateProduct(Product product) {
         Product oldProduct = getProductById(product.getProductId());
+        if (oldProduct == null) {
+            return null;
+        }
         oldProduct.setProductName(product.getProductName());
         oldProduct.setProductQuantity(product.getProductQuantity());
         return product;
