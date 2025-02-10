@@ -13,7 +13,6 @@ public class ProductRepository {
     private List<Product> productData = new ArrayList<>();
 
     public Product create(Product product) {
-        product.setProductId(UUID.randomUUID().toString());
         productData.add(product);
         return product;
     }
@@ -31,6 +30,9 @@ public class ProductRepository {
 
     public Product updateProduct(Product product) {
         Product oldProduct = getProductById(product.getProductId());
+        if (oldProduct == null) {
+            return null;
+        }
         oldProduct.setProductName(product.getProductName());
         oldProduct.setProductQuantity(product.getProductQuantity());
         return product;
