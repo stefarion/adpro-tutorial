@@ -31,7 +31,6 @@ name: SonarCloud analysis
 on:
   push:
   pull_request:
-    branches: ["main"]
   workflow_dispatch:
 
 permissions:
@@ -49,6 +48,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}  # Needed to get PR information
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}   # Generate a token on Sonarcloud.io, add it to the secrets of this repo with the name SONAR_TOKEN (Settings > Secrets > Actions > add new repository secret)
+
+        run: ./gradlew build sonar --info
         with:
           # Additional arguments for the sonarcloud scanner
           args:
