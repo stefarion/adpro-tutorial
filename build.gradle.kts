@@ -1,6 +1,7 @@
 plugins {
     java
     jacoco
+    id("org.sonarqube") version "6.0.1.5171"
     id("org.springframework.boot") version "3.4.2"
     id("io.spring.dependency-management") version "1.1.7"
 }
@@ -14,6 +15,7 @@ val webdrivermanagerVersion = "5.6.3"
 val junitJupiterVersion = "5.9.1"
 
 java {
+    sourceCompatibility = JavaVersion.VERSION_21
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
     }
@@ -27,6 +29,14 @@ configurations {
 
 repositories {
     mavenCentral()
+}
+
+sonar {
+    properties {
+        property ("sonar.projectKey", "stefarion_adpro-tutorial")
+        property ("sonar.organization", "stefarion")
+        property ("sonar.host.url", "https://sonarcloud.io")
+    }
 }
 
 dependencies {
@@ -70,6 +80,11 @@ tasks.test {
     }
     finalizedBy(tasks.jacocoTestReport)
 }
+
 tasks.jacocoTestReport {
     dependsOn(tasks.test)
+    reports {
+        html.required = true
+        xml.required = true
+    }
 }

@@ -5,7 +5,6 @@ import id.ac.ui.cs.advprog.eshop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
@@ -22,14 +21,11 @@ public class ProductController {
     public String createProductPage(Model model) {
         Product product = new Product();
         model.addAttribute("product", product);
-        return "createProduct";
+        return "CreateProduct";
     }
 
     @PostMapping("/create")
-    public String createProductPost(@Valid @ModelAttribute Product product, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            return "createProduct";
-        }
+    public String createProductPost(@Valid @ModelAttribute Product product, Model model) {
         service.create(product);
         return "redirect:list";
     }
@@ -38,26 +34,24 @@ public class ProductController {
     public String productListPage(Model model) {
         List<Product> allProducts = service.findAll();
         model.addAttribute("products", allProducts);
-        return "productList";
+        return "ProductList";
     }
 
     @GetMapping("/edit/{productId}")
     public String editProductForm(@PathVariable("productId") String productId, Model model) {
         Product product = service.getProductById(productId);
         model.addAttribute("product", product);
-        return "editProduct";
+        return "EditProduct";
     }
 
-    @PostMapping("/edit")
-    public String updateProduct(@Valid @ModelAttribute Product product, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            return "editProduct";
-        }
-        service.updateProduct(product);
+    @PutMapping("/edit/{productId}")
+    public String updateProduct(@PathVariable String productId, @ModelAttribute Product productUpdate){
+        productUpdate.setProductId(productId);
+        service.updateProduct(productUpdate);
         return "redirect:/product/list";
     }
 
-    @GetMapping("/delete/{productId}")
+    @DeleteMapping("/delete/{productId}")
     public String deleteProduct(@PathVariable("productId") String productId) {
         service.deleteProduct(productId);
         return "redirect:/product/list";
