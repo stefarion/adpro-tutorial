@@ -42,14 +42,14 @@ public class ProductControllerTest{
     void testProductListPage() throws Exception{
         MockHttpServletResponse response = mockMvc.perform(get("/product/list"))
                 .andReturn().getResponse();
-        assertEquals(response.getStatus(), HttpStatus.SC_OK);
+        assertEquals(HttpStatus.SC_OK, response.getStatus());
     }
 
     @Test
     void testCreateProductPage() throws Exception{
         MockHttpServletResponse response = mockMvc.perform(get("/product/create"))
                 .andReturn().getResponse();
-        assertEquals(response.getStatus(), HttpStatus.SC_OK);
+        assertEquals(HttpStatus.SC_OK, response.getStatus());
     }
 
     @Test
@@ -62,7 +62,7 @@ public class ProductControllerTest{
         MockHttpServletResponse response = mockMvc.perform(
                         get("/product/edit/eb558e9f-1c39-460e-8860-71af6af63bd6"))
                 .andReturn().getResponse();
-        assertEquals(response.getStatus(), HttpStatus.SC_OK);
+        assertEquals(HttpStatus.SC_OK, response.getStatus());
     }
 
     @Test
