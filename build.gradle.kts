@@ -30,6 +30,14 @@ repositories {
     mavenCentral()
 }
 
+sonar {
+    properties {
+        property ("sonar.projectKey", "stefarion_adpro-tutorial")
+        property ("sonar.organization", "stefarion")
+        property ("sonar.host.url", "https://sonarcloud.io")
+    }
+}
+
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-web")
