@@ -19,6 +19,7 @@ class ProductRepositoryTest {
     @BeforeEach
     void setUp(){
     }
+
     @Test
     void testCreateAndFind(){
         Product product = new Product();
@@ -33,11 +34,13 @@ class ProductRepositoryTest {
         assertEquals(product.getProductName(),savedProduct.getProductName());
         assertEquals(product.getProductQuantity(),savedProduct.getProductQuantity());
     }
+
     @Test
     void testFindAllIfEmpty(){
         Iterator<Product> productIterator = productRepository.findAll();
         assertFalse(productIterator.hasNext());
     }
+
     @Test
     void testFindAllIfMoreThanOneProduct(){
         Product product1 = new Product();
@@ -58,6 +61,7 @@ class ProductRepositoryTest {
         assertEquals(product2.getProductId(),savedProduct.getProductId());
         assertFalse(productIterator.hasNext());
     }
+
     @Test
     void testCreateAndDelete() {
         Product product = new Product();
@@ -70,6 +74,7 @@ class ProductRepositoryTest {
         productRepository.deleteProduct(product.getProductId());
         assertFalse(productIterator.hasNext());
     }
+
     @Test
     void testDeleteIfNotFound() {
         Product product = new Product();
@@ -82,6 +87,7 @@ class ProductRepositoryTest {
         assertFalse(productRepository.deleteProduct("a0f9de46-90b1-437d-a0bf-d0821dde9096"));
         assertTrue(productIterator.hasNext());
     }
+
     @Test
     void testDeleteIfMoreThanOneProduct() {
         Product product1 = new Product();
@@ -101,6 +107,7 @@ class ProductRepositoryTest {
         productRepository.deleteProduct(product2.getProductId());
         assertFalse(productIterator.hasNext());
     }
+
     @Test
     void testCreateAndEdit() {
         Product product = new Product();
@@ -117,6 +124,7 @@ class ProductRepositoryTest {
         assertEquals(product.getProductName(), savedProduct.getProductName());
         assertEquals(product.getProductQuantity(), savedProduct.getProductQuantity());
     }
+
     @Test
     void testEditIfNotFound() {
         Product product = new Product();
@@ -136,6 +144,7 @@ class ProductRepositoryTest {
         assertEquals(product.getProductName(), savedProduct.getProductName());
         assertEquals(product.getProductQuantity(), savedProduct.getProductQuantity());
     }
+
     @Test
     void testEditIfMoreThanOneProduct() {
         Product product1 = new Product();
@@ -160,5 +169,45 @@ class ProductRepositoryTest {
         savedProduct = productIterator.next();
         assertEquals(product2.getProductName(), savedProduct.getProductName());
         assertEquals(product2.getProductQuantity(), savedProduct.getProductQuantity());
+    }
+
+    @Test
+    void testCreateEditDelete(){
+        Product productCreate  = new Product();
+        productCreate.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        productCreate.setProductName("Kalung Emas");
+        productCreate.setProductQuantity(100);
+        productRepository.create(productCreate);
+
+        Product productUpdate = new Product();
+        productUpdate.setProductName("Kalung Berlian");
+        productUpdate.setProductQuantity(200);
+        productUpdate.setProductId(productCreate.getProductId());
+        productRepository.updateProduct(productUpdate);
+
+        assertEquals(productCreate.getProductName(),"Kalung Berlian");
+        assertEquals(productCreate.getProductQuantity(),200);
+
+        assertTrue(productRepository.deleteProduct("eb558e9f-1c39-460e-8860-71af6af63bd6"));
+
+        Iterator<Product> productIterator = productRepository.findAll();
+
+        assertFalse(productIterator.hasNext());
+    }
+
+    @Test
+    void testGetFound(){
+        Product product = new Product();
+        product.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        productRepository.create(product);
+        assertTrue(productRepository.getProductById("eb558e9f-1c39-460e-8860-71af6af63bd6")!=null);
+    }
+
+    @Test
+    void testGetNotFound(){
+        Product product = new Product();
+        product.setProductId("a0f9de45-90b1-437d-a0bf-d0821dde9096");
+        productRepository.create(product);
+        assertFalse(productRepository.getProductById("eb558e9f-1c39-460e-8860-71af6af63bd6")!=null);
     }
 }
