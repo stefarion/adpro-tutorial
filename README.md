@@ -3,8 +3,12 @@
 **NPM:**    &nbsp;&ensp; 2306152456<br>
 **Kelas:**  &nbsp; Pemrograman Lanjut A<br>
 
+### Deployment Link
+Check out the website here: [stefarion-adpro-tutorial-eshop.koyeb.app/](stefarion-adpro-tutorial-eshop.koyeb.app/)
+
 ### Module Reflection
 - [Modul 1](#modul-1)
+- [Modul 2](#modul-2)
 
 ## Modul 1
 ### Reflection 1.1
@@ -19,3 +23,5 @@ Sebelumnya, saya mohon izin *update* perkembangan EShop dari rencana sebelumnya.
    * Menurut saya, tidak ada batasan dalam membuat *unit test*, namun sebaiknya dibuat secukupnya saja. *Unit test* difokuskan untuk menguji suatu *class*, baik positif maupun negatif serta *edge case* bila diperlukan.
    * Untuk mengetahui apakah semua *unit test* yang dibuat sudah cukup menjamin kode kita, mempelajari *code coverage* bisa menjadi solusi. *Code coverage* menyatakan persentase seberapa banyak baris kode yang dieksekusi saat menjalankan *unit test*. Namun, tingkat *code coverage* 100% tidak menjamin bahwa kode bebas dari *bug*. Bisa saja ada kemungkinan *edge case* yang terlewat. "All input is evil, until proven otherwise." ― Michael Howard & David LeBlanc, Writing Secure Code.
 2. Menurut saya, jika diminta membuat *file* baru dengan *class* untuk melakukan tes pada jumlah *item* di dalam Product List dengan *setup* dan *instance* variabel yang sama dengan `CreateProductFunctionalTest.java`, justru akan melanggar prinsip *clean coding*. Kasus ini ada dikarenakan sebenarnya kita mengulang struktur kode *test* yang sama, hanya fungsinya yang berbeda. Sebaiknya, tes jumlah *item* ditambah ke *file* yang sama, yaitu `CreateProductFunctionalTest.java` untuk menjaga prinsip *clean code*.
+
+## Modul 2
