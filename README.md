@@ -4,7 +4,7 @@
 **Kelas:**  &nbsp; Pemrograman Lanjut A<br>
 
 ### Deployment Link
-Check out the website here: [stefarion-adpro-tutorial-eshop.koyeb.app/](stefarion-adpro-tutorial-eshop.koyeb.app/)
+Check out the website here: [stefarion-adpro-tutorial-eshop.koyeb.app](https://stefarion-adpro-tutorial-eshop.koyeb.app)
 
 ### Module Reflection
 - [Modul 1](#modul-1)
