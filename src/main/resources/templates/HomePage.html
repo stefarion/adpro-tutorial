@@ -4,21 +4,34 @@
     <meta charset="UTF-8">
     <title>ADV Shop</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <style>
+        .container {
+            padding-top: 20px;
+            padding-bottom: 20px;
+            height: 100vh;
+        }
+        .header {
+            text-align: left;
+        }
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+    </style>
 </head>
-<style>
-    .container{
-        padding-top: 20px;
-        padding-bottom: 20px;
-    }
-</style>
 <body>
 <div class="container">
-    <h3>Welcome</h3>
-    <h1>Hello, user</h1>
-    <a th:href="@{/product/list}">
-        <button class="btn btn-primary">See Product List</button>
-    </a>
+    <div class="header">
+        <h3>Welcome</h3>
+        <h1>Hello, user</h1>
+    </div>
+    <div class="button-group">
+        <a th:href="@{/product/list}" class="btn btn-primary">See Product List</a>
+        <a th:href="@{/car/listCar}" class="btn btn-primary">Car List</a>
+    </div>
 </div>
-</body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gm"></script>
+</body>
 </html>
