@@ -99,10 +99,10 @@ public class ProductController {
             return "redirect:listCar";
         }
 
-        @PostMapping("/deleteCar")
-        public String deleteCar(@RequestParam("carId") String carId) {
+        @DeleteMapping("/deleteCar/{carId}")
+        public String deleteCar(@PathVariable("carId") String carId) {
             carService.deleteCarById(carId);
-            return "redirect:listCar";
+            return "redirect:/car/listCar";
         }
     }
 }
