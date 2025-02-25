@@ -3,6 +3,7 @@ package id.ac.ui.cs.advprog.eshop.controller;
 import id.ac.ui.cs.advprog.eshop.model.Product;
 import id.ac.ui.cs.advprog.eshop.service.ProductService;
 import id.ac.ui.cs.advprog.eshop.model.Car;
+import id.ac.ui.cs.advprog.eshop.service.CarService;
 import id.ac.ui.cs.advprog.eshop.service.CarServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -65,7 +66,7 @@ public class ProductController {
         @Autowired
         private CarServiceImpl carService;
 
-        @GetMapping("/CreateCar")
+        @GetMapping("/createCar")
         public String createCarPage(Model model) {
             Car car = new Car();
             model.addAttribute("car", car);

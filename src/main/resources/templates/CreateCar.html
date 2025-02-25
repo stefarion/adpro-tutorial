@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Create New Car</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERd`knLPMO" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 <body>
 
@@ -13,15 +13,15 @@
     <form th:action="@{/car/createCar}" th:object="${car}" method="post">
         <div class="form-group">
             <label for="nameInput">Name</label>
-            <input th:field="*{carName}" type="text" class="form-control mb-4 col-4" id="nameInput" placeholder="Enter car' name">
+            <input th:field="*{carName}" type="text" class="form-control mb-4 col-4" id="nameInput" placeholder="Enter car's name">
         </div>
         <div class="form-group">
             <label for="colorInput">Color</label>
-            <input th:field="*{carColor}" type="text" class="form-control mb-4 col-4" id="colorInput" placeholder="Enter car' color">
+            <input th:field="*{carColor}" type="text" class="form-control mb-4 col-4" id="colorInput" placeholder="Enter car's color">
         </div>
         <div class="form-group">
             <label for="quantityInput">Quantity</label>
-            <input th:field="*{carQuantity}" type="text" class="form-control mb-4 col-4" id="quantityInput" placeholder="Enter car' quantity">
+            <input th:field="*{carQuantity}" type="text" class="form-control mb-4 col-4" id="quantityInput" placeholder="Enter car's quantity">
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>

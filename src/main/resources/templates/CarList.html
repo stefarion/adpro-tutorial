@@ -2,32 +2,47 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Create New Car</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERd`knLPMO" crossorigin="anonymous">
+    <title>Car List</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 <body>
 
-<div class="container">
-    <h3>Create New Car</h3>
+<div class="container my-2">
+    <h2>Car List</h2>
+    <a th:href="@{/car/createCar}" class="btn btn-primary btn-sm mb-3">Create Car</a>
 
-    <form th:action="@{/car/createCar}" th:object="${car}" method="post">
-        <div class="form-group">
-            <label for="nameInput">Name</label>
-            <input th:field="*{carName}" type="text" class="form-control mb-4 col-4" id="nameInput" placeholder="Enter car' name">
-        </div>
-        <div class="form-group">
-            <label for="colorInput">Color</label>
-            <input th:field="*{carColor}" type="text" class="form-control mb-4 col-4" id="colorInput" placeholder="Enter car' color">
-        </div>
-        <div class="form-group">
-            <label for="quantityInput">Quantity</label>
-            <input th:field="*{carQuantity}" type="text" class="form-control mb-4 col-4" id="quantityInput" placeholder="Enter car' quantity">
-        </div>
-
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+    <table border="1" class="table table-striped table-responsive-md">
+        <caption>Car List</caption>
+        <thead>
+        <tr>
+            <th scope="col">Car Name</th>
+            <th scope="col">Color</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="car: ${cars}">
+            <td th:text="${car.carName}"></td>
+            <td th:text="${car.carColor}"></td>
+            <td th:text="${car.carQuantity}"></td>
+            <td>
+                <a th:href="@{/car/editCar/{id}(id=${car.carId})}" class="btn btn-warning btn-sm">Edit Car</a>
+                <form th:action="@{/car/deleteCar/}" method="post" style="display:inline;">
+                    <input type="hidden" name="_method" value="delete" />
+                    <button type="submit" class="btn btn-danger btn-sm"
+                            onclick="return confirm('Are you sure you want to delete this car?');">
+                        Delete Car
+                    </button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>
