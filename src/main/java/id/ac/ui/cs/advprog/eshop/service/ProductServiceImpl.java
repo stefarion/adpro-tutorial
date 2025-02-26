@@ -2,7 +2,6 @@ package id.ac.ui.cs.advprog.eshop.service;
 
 import id.ac.ui.cs.advprog.eshop.model.Product;
 import id.ac.ui.cs.advprog.eshop.repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.validation.Valid;
@@ -13,8 +12,11 @@ import java.util.List;
 @Service
 public class ProductServiceImpl implements ProductService {
 
-    @Autowired
-    private ProductRepository productRepository = new ProductRepository();
+    private ProductRepository productRepository;
+
+    public ProductServiceImpl() {
+        productRepository = new ProductRepository();
+    }
 
     @Override
     public Product create(@Valid Product product) {
