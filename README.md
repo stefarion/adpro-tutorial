@@ -9,6 +9,7 @@ Check out the website here: [stefarion-adpro-tutorial-eshop.koyeb.app](https://s
 ### Module Reflection
 - [Modul 1](#modul-1)
 - [Modul 2](#modul-2)
+- [Modul 3](#modul-3)
 
 ## Modul 1
 ### Reflection 1.1
@@ -31,3 +32,22 @@ Sebelumnya, saya mohon izin *update* perkembangan EShop dari rencana sebelumnya.
    Dalam *exercise* ini juga, saya menambahkan beberapa *unit tests* baru untuk mencapai 100% *code coverage*. Bagian utama yang diliputi adalah *unit tests* untuk `ProductService`, `ProductController`, dan `HomePageController` karena bagian tersebut tidak di-*cover* pada modul sebelumnya.
    <br><br>
 2. Menurut saya, kode dalam program EShop ini sudah mengimplementasikan *workflow* CI/CD sesuai dengan definisinya. Kode saya akan melakukan Continuous Integration secara otomatis dengan GitHub Actions setelah *push*. Kode dianalisis juga dengan Scorecard dan SonarCloud. Pada bagian Continuous Deployment, saya menggunakan Koyeb sebagai PaaS. Koyeb sudah dihubungkan dengan repositori ini, sehingga setiap perubahan yang di-*push* akan dicatat dan Koyeb secara otomatis melakukan *deployment*.
+
+## Modul 3
+1) **Explain what principles you apply to your project!**
+   * S (Single Responsibility Principle)<br>
+   Pada awal pembuatan program ini, *class* `HomePage()` masih terletak pada `ProductController`. Hal ini melanggar SRP karena `HomePage()` memiliki tanggung jawab sendiri untuk menangani halaman *home*, bukan produk. Jadi, dibuat *file class* baru `HomePageController` khusus untuk *handle* *homepage*. Selain itu, sebelumnya terdapat *class* `CarController` yang merupakan *extends* dari `ProductController`. Seharusnya `CarController` dipisahkan karena memiliki tanggung jawab sendiri untuk menangani halaman *car* yang berbeda fungsionalitasnya dengan halaman *product*.<br><br>
+   * L (Liskov Substitution Principle)<br>
+   Sebelumnya, `CarController` diposisikan sebagai *subclass* dari `ProductController`. Namun, kedua *controller* tersebut menjalankan fungsi yang berbeda. `CarController` juga tidak mampu menggantikan `ProductController`, sehingga keduanya harus dipisah dengan saya membuat *file class* `CarController`<br><br>
+   * I (Interface Segregation Principle)<br>
+   *Interface* `CarService` dan `ProductService` hanya berisi *method class* yang memang menjalankan tugas tertentu  pada EShop ini. Maka, tiap *interface* memiliki tanggung jawab masing-masing tanpa ada pemaksaan untuk menggunakan semua *method class* yang dibuat.<br><br>
+   * D (Dependency Inversions Principle)<br>
+   Dalam `CarController`, *line* `private CarServiceImpl carService` diubah menjadi `private CarService carService`. Hal ini untuk menerapkan prinsip DIP di mana suatu modul harus bergantung pada *interface* atau *class* yang bersifat abstrak daripada bergantung pada *class* yang *concrete*. Selain itu, perubahan pemanggilan `ProductRepository` di `ProductServiceImpl` dan `CarRepository` di `CarServiceImpl` bertujuan untuk menghindari inisialisasi manual, yang juga bertentangan dengan DIP.<br><br>
+2) **Explain the advantages of applying SOLID principles to your project with examples.**
+   * Karena pada model `Product` berisi atribut-atribut dari *product* dan *instance* dari *product* diimplementasikan di `ProductRepository`, kode saya menjadi lebih mudah untuk di-*maintain*. *Unit test* telah dibuat tertuju `ProductRepository` untuk menguji logika *method* *instance*-nya dan tertuju model `Product` dengan menguji atributnya. Pemisahan ini juga membantu dalam membaca *bug*.
+   * Terkait pembacaan *bug*, kode saya lebih mudah untuk diuji dan dicek. *Unit test* yang dibuat terkhusus untuk menguji *method* atas tugas yang dijalankannya masing-masing. Sebagai contoh, `testCreateProduct()` berfungsi hanya untuk menjalankan tes pembuatan produk pada `ProductRepository` tanpa melibatkan *method* lain di *file* yang sama.
+   * Kode saya menjadi lebih mudah untuk dibaca dan dipahami karena pemisahan *method*-*method* atas tugasnya masing-masing. Bisa dilihat pada bagian *controller* ada yang khusus menangani *homepage*, `Product`, dan `Car`.<br><br>
+3) **Explain the disadvantages of not applying SOLID principles to your project with examples.**
+   * Kode saya akan lebih sulit untuk di-*maintain*. Sebagai contoh, bila model `Product` dan `ProductRepository` digabung, model harus ikut diuji untuk logika *instance* dan *repository* harus ikut diuji untuk atribut produk.
+   * Dengan kasus yang sama seperti tadi, hal ini akan mengakibatkan kode saya menjadi lebih kompleks dan meningkatkan potensi *bug* dan *error*. *Unit test* yang dibuat juga menjadi kurang terfokus karena juga harus menguji bagian-bagian yang tidak diperlukan.
+   * Jika modul `CarController` langsung bergantung pada *class* yang *concrete* seperti `CarServiceImpl`, saya bisa menemui kesulitan untuk mengembangkan *codebase* saya karena terjadi *tight coupling* antara *controller* dan implementasi.  
