@@ -74,7 +74,7 @@ class ProductRepositoryTest {
         productRepository.create(product);
         Iterator<Product> productIterator = productRepository.findAll();
         assertTrue(productIterator.hasNext());
-        productRepository.deleteProduct(product.getProductId());
+        productRepository.delete(product.getProductId());
         assertFalse(productIterator.hasNext());
     }
 
@@ -87,7 +87,7 @@ class ProductRepositoryTest {
         productRepository.create(product);
         Iterator<Product> productIterator = productRepository.findAll();
         assertTrue(productIterator.hasNext());
-        assertFalse(productRepository.deleteProduct("a0f9de46-90b1-437d-a0bf-d0821dde9096"));
+        assertNull(productRepository.delete("a0f9de46-90b1-437d-a0bf-d0821dde9096"));
         assertTrue(productIterator.hasNext());
     }
 
@@ -105,9 +105,9 @@ class ProductRepositoryTest {
         productRepository.create(product2);
         Iterator<Product> productIterator = productRepository.findAll();
         assertTrue(productIterator.hasNext());
-        productRepository.deleteProduct(product1.getProductId());
+        productRepository.delete(product1.getProductId());
         assertTrue(productIterator.hasNext());
-        productRepository.deleteProduct(product2.getProductId());
+        productRepository.delete(product2.getProductId());
         assertFalse(productIterator.hasNext());
     }
 
@@ -122,7 +122,7 @@ class ProductRepositoryTest {
         assertTrue(productIterator.hasNext());
         product.setProductName("Sampo Cap Raiden");
         product.setProductQuantity(20);
-        productRepository.updateProduct(product);
+        productRepository.update(product.getProductId(), product);
         Product savedProduct = productIterator.next();
         assertEquals(product.getProductName(), savedProduct.getProductName());
         assertEquals(product.getProductQuantity(), savedProduct.getProductQuantity());
@@ -139,7 +139,7 @@ class ProductRepositoryTest {
         dummyProduct.setProductId("a0f9de46-90b1-437d-a0bf-d0821dde9096");
         dummyProduct.setProductName("Sampo Cap Paes");
         dummyProduct.setProductQuantity(50);
-        assertNull(productRepository.updateProduct(dummyProduct));
+        assertNull(productRepository.update(dummyProduct.getProductId(), dummyProduct));
         Iterator<Product> productIterator = productRepository.findAll();
         assertTrue(productIterator.hasNext());
         Product savedProduct = productIterator.next();
@@ -162,7 +162,7 @@ class ProductRepositoryTest {
         productRepository.create(product2);
         product1.setProductName("Sampo Cap Raiden");
         product1.setProductQuantity(20);
-        productRepository.updateProduct(product1);
+        productRepository.update(product1.getProductId(), product1);
         Iterator<Product> productIterator = productRepository.findAll();
         assertTrue(productIterator.hasNext());
         Product savedProduct = productIterator.next();
@@ -186,12 +186,12 @@ class ProductRepositoryTest {
         productUpdate.setProductName("Kalung Berlian");
         productUpdate.setProductQuantity(200);
         productUpdate.setProductId(productCreate.getProductId());
-        productRepository.updateProduct(productUpdate);
+        productRepository.update(productUpdate.getProductId(), productUpdate);
 
         assertEquals(productCreate.getProductName(),"Kalung Berlian");
         assertEquals(productCreate.getProductQuantity(),200);
 
-        assertTrue(productRepository.deleteProduct("eb558e9f-1c39-460e-8860-71af6af63bd6"));
+        assertNotNull(productRepository.delete("eb558e9f-1c39-460e-8860-71af6af63bd6"));
 
         Iterator<Product> productIterator = productRepository.findAll();
 
@@ -203,7 +203,7 @@ class ProductRepositoryTest {
         Product product = new Product();
         product.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
         productRepository.create(product);
-        assertTrue(productRepository.getProductById("eb558e9f-1c39-460e-8860-71af6af63bd6")!=null);
+        assertNotNull(productRepository.findById("eb558e9f-1c39-460e-8860-71af6af63bd6"));
     }
 
     @Test
@@ -211,6 +211,6 @@ class ProductRepositoryTest {
         Product product = new Product();
         product.setProductId("a0f9de45-90b1-437d-a0bf-d0821dde9096");
         productRepository.create(product);
-        assertFalse(productRepository.getProductById("eb558e9f-1c39-460e-8860-71af6af63bd6")!=null);
+        assertNull(productRepository.findById("eb558e9f-1c39-460e-8860-71af6af63bd6"));
     }
 }

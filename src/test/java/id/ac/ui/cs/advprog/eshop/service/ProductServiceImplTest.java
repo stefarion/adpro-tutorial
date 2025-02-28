@@ -64,7 +64,7 @@ public class ProductServiceImplTest {
         productUpdate.setProductName("Daging Kambing");
         productUpdate.setProductQuantity(10);
         productUpdate.setProductId(productCreate.getProductId());
-        productService.updateProduct(productUpdate);
+        productService.update(productUpdate);
         assertEquals(productCreate.getProductName(),"Daging Kambing");
         assertEquals(productCreate.getProductQuantity(),10);
     }
@@ -74,7 +74,7 @@ public class ProductServiceImplTest {
         Product product = new Product();
         product.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
         productService.create(product);
-        assertTrue(productService.getProductById("eb558e9f-1c39-460e-8860-71af6af63bd6")!=null);
+        assertTrue(productService.findById("eb558e9f-1c39-460e-8860-71af6af63bd6")!=null);
     }
 
     @Test
@@ -82,7 +82,7 @@ public class ProductServiceImplTest {
         Product product = new Product();
         product.setProductId("a0f9de45-90b1-437d-a0bf-d0821dde9096");
         productService.create(product);
-        assertFalse(productService.getProductById("eb558e9f-1c39-460e-8860-71af6af63bd6")!=null);
+        assertFalse(productService.findById("eb558e9f-1c39-460e-8860-71af6af63bd6")!=null);
     }
 
     @Test
@@ -90,6 +90,6 @@ public class ProductServiceImplTest {
         Product product = new Product();
         product.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
         productService.create(product);
-        assertFalse(productService.deleteProduct("a0f9de45-90b1-437d-a0bf-d0821dde9096"));
+        assertFalse(productService.delete("a0f9de45-90b1-437d-a0bf-d0821dde9096")!=null);
     }
 }
