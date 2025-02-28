@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 
 @Repository
-public class ProductRepository {
+public class ProductRepository implements RepositoryInterface<Product>{
     private List<Product> productData = new ArrayList<>();
 
     public Product create(@Valid Product product) {
@@ -21,24 +21,25 @@ public class ProductRepository {
         return productData.iterator();
     }
 
-    public Product getProductById(String productId) {
+    public Product findById(String productId) {
         return productData.stream()
                 .filter(product -> product.getProductId().equals(productId))
                 .findFirst()
                 .orElse(null);
     }
 
-    public Product updateProduct(Product product) {
-        Product oldProduct = getProductById(product.getProductId());
-        if (oldProduct == null) {
-            return null;
+    public Product update(String productId, Product newProductData) {
+        Product selectedProduct = findById(productId);
+        if (selectedProduct != null) {
+            selectedProduct.setProductName(newProductData.getProductName());
+            selectedProduct.setProductQuantity(newProductData.getProductQuantity());
         }
-        oldProduct.setProductName(product.getProductName());
-        oldProduct.setProductQuantity(product.getProductQuantity());
-        return product;
+        return selectedProduct;
     }
 
-    public boolean deleteProduct(String productId) {
-        return productData.removeIf(product -> product.getProductId().equals(productId));
+    public Product delete(String productId) {
+        Product selectedProduct = findById(productId);
+        productData.remove(selectedProduct);
+        return selectedProduct;
     }
 }

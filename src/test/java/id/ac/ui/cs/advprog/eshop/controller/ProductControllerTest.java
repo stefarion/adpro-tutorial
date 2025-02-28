@@ -47,7 +47,7 @@ public class ProductControllerTest{
         product1.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
         product1.setProductName("Sampo Cap Bambang");
         product1.setProductQuantity(100);
-        Mockito.when(service.getProductById("eb558e9f-1c39-460e-8860-71af6af63bd6")).thenReturn(product1);
+        Mockito.when(service.findById("eb558e9f-1c39-460e-8860-71af6af63bd6")).thenReturn(product1);
         MockHttpServletResponse response = mockMvc.perform(
                         get("/product/edit/eb558e9f-1c39-460e-8860-71af6af63bd6"))
                 .andReturn().getResponse();
