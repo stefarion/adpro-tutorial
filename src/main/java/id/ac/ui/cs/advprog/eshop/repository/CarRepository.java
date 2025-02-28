@@ -50,7 +50,7 @@ public class CarRepository implements RepositoryInterface<Car> {
 
     public Car delete(String carId){
         Car selectedCar = findById(carId);
-        carData.removeIf(car -> car.getCarId().equals(id));
+        carData.removeIf(car -> car.getCarId().equals(carId));
         return selectedCar;
     }
 }
