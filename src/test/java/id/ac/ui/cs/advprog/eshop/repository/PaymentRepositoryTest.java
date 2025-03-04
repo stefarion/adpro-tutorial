@@ -33,7 +33,7 @@ public class PaymentRepositoryTest {
         this.voucherPaymentData.put("voucherCode", "ESHOP1234ABC5678");
         this.codPaymentData = new HashMap<String, String>();
         this.codPaymentData.put("address", "Jl. Salad Buah 3, No. 19");
-        this.codPaymentData.put("deliveryFee", "12000");
+        this.codPaymentData.put("deliveryFee", "15500");
         this.products = new ArrayList<>();
         Product product1 = new Product();
         product1.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
@@ -41,7 +41,7 @@ public class PaymentRepositoryTest {
         product1.setProductQuantity(2);
         Product product2 = new Product();
         product2.setProductId("a2c62328-4a37-4664-83c7-f32db8620155");
-        product2.setProductName("Sabun Cap Usep");
+        product2.setProductName("Sampo Cap Paes");
         product2.setProductQuantity(1);
         this.products.add(product1);
         this.products.add(product2);
@@ -139,10 +139,10 @@ public class PaymentRepositoryTest {
         Map<String, String> paymentDataWithoutDeliveryFee = new HashMap<String, String>();
         Map<String, String> paymentDataWithEmptyAddress = new HashMap<String, String>();
         Map<String, String> paymentDataWithEmptyDeliveryFee = new HashMap<String, String>();
-        paymentDataWithoutAddress.put("deliveryFee", "12000");
+        paymentDataWithoutAddress.put("deliveryFee", "15500");
         paymentDataWithoutDeliveryFee.put("address", "Jl. Salad Buah 3, No. 19");
         paymentDataWithEmptyAddress.put("address", "");
-        paymentDataWithEmptyAddress.put("deliveryFee", "12000");
+        paymentDataWithEmptyAddress.put("deliveryFee", "15500");
         paymentDataWithEmptyDeliveryFee.put("deliveryFee", "");
         paymentDataWithEmptyDeliveryFee.put("address", "Jl. Salad Buah 3, No. 19");
         assertThrows(IllegalArgumentException.class, () -> {

@@ -88,7 +88,7 @@ public class PaymentTest {
         paymentDataWithoutAddress.put("deliveryFee", "12000");
         paymentDataWithoutDeliveryFee.put("address", "Jl. Salad Buah 3, No. 19");
         paymentDataWithEmptyAddress.put("address", "");
-        paymentDataWithEmptyAddress.put("deliveryFee", "12000");
+        paymentDataWithEmptyAddress.put("deliveryFee", "15500");
         paymentDataWithEmptyDeliveryFee.put("deliveryFee", "");
         paymentDataWithEmptyDeliveryFee.put("address", "Jl. Salad Buah 3, No. 19");
 
