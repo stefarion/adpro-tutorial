@@ -19,7 +19,7 @@ public class Payment {
         this.id = UUID.randomUUID().toString();
         this.paymentData = paymentData;
         this.setMethod(method);
-        this.setStatus(PaymentStatus.SUCCESS.getValue());
+        this.setStatus(PaymentStatus.WAITING.getValue());
         this.setPaymentData(paymentData);
         if (order == null) {
             throw new IllegalArgumentException();

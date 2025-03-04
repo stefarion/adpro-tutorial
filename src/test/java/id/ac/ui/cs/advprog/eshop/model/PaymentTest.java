@@ -132,7 +132,7 @@ public class PaymentTest {
     void testCreateVoucherPaymentSuccess() {
         Payment payment = new Payment("VOUCHER", this.voucherPaymentData, this.order);
         assertNotNull(payment.getId(), "Payment id should not be null");
-        assertEquals("SUCCESS", payment.getStatus());
+        assertEquals("WAITING", payment.getStatus());
         assertSame(this.voucherPaymentData, payment.getPaymentData());
         assertSame(this.order, payment.getOrder());
     }
@@ -141,7 +141,7 @@ public class PaymentTest {
     void testCreateBankPaymentSuccess() {
         Payment payment = new Payment("BANK", this.bankPaymentData, this.order);
         assertNotNull(payment.getId(), "Payment id should not be null");
-        assertEquals("SUCCESS", payment.getStatus());
+        assertEquals("WAITING", payment.getStatus());
         assertSame(this.bankPaymentData, payment.getPaymentData());
         assertSame(this.order, payment.getOrder());
     }
