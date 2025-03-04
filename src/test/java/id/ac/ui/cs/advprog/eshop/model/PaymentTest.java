@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 
 public class PaymentTest {
     private Map<String, String> voucherPaymentData;
-    private Map<String, String> codPaymentData;
+    private Map<String, String> bankPaymentData;
     private List<Product> products;
     private Order order;
 
@@ -24,9 +24,9 @@ public class PaymentTest {
         this.voucherPaymentData = new HashMap<>();
         this.voucherPaymentData.put("voucherCode", "ESHOP1234ABC5678");
 
-        this.codPaymentData = new HashMap<>();
-        this.codPaymentData.put("address", "Jl. Salad Buah 3, No. 19");
-        this.codPaymentData.put("deliveryFee", "15500");
+        this.bankPaymentData = new HashMap<>();
+        this.bankPaymentData.put("bankName", "BCA");
+        this.bankPaymentData.put("referenceCode", "REF1234567890123");
 
         this.products = new ArrayList<>();
         Product product1 = new Product();
@@ -79,30 +79,30 @@ public class PaymentTest {
     }
 
     @Test
-    void testCreateCODPaymentWithInvalidData() {
-        Map<String, String> paymentDataWithoutAddress = new HashMap<>();
-        Map<String, String> paymentDataWithoutDeliveryFee = new HashMap<>();
-        Map<String, String> paymentDataWithEmptyAddress = new HashMap<>();
-        Map<String, String> paymentDataWithEmptyDeliveryFee = new HashMap<>();
+    void testCreateBankPaymentWithInvalidData() {
+        Map<String, String> paymentDataWithoutBankName = new HashMap<>();
+        Map<String, String> paymentDataWithoutReferenceCode = new HashMap<>();
+        Map<String, String> paymentDataWithEmptyBankName = new HashMap<>();
+        Map<String, String> paymentDataWithEmptyReferenceCode = new HashMap<>();
 
-        paymentDataWithoutAddress.put("deliveryFee", "12000");
-        paymentDataWithoutDeliveryFee.put("address", "Jl. Salad Buah 3, No. 19");
-        paymentDataWithEmptyAddress.put("address", "");
-        paymentDataWithEmptyAddress.put("deliveryFee", "15500");
-        paymentDataWithEmptyDeliveryFee.put("deliveryFee", "");
-        paymentDataWithEmptyDeliveryFee.put("address", "Jl. Salad Buah 3, No. 19");
+        paymentDataWithoutBankName.put("referenceCode", "REF1234567890123");
+        paymentDataWithoutReferenceCode.put("bankName", "BCA");
+        paymentDataWithEmptyBankName.put("bankName", "");
+        paymentDataWithEmptyBankName.put("referenceCode", "REF1234567890123");
+        paymentDataWithEmptyReferenceCode.put("referenceCode", "");
+        paymentDataWithEmptyReferenceCode.put("bankName", "BCA");
 
         assertThrows(IllegalArgumentException.class, () -> {
-            new Payment("COD", paymentDataWithoutAddress, this.order);
+            new Payment("BANK", paymentDataWithoutBankName, this.order);
         });
         assertThrows(IllegalArgumentException.class, () -> {
-            new Payment("COD", paymentDataWithoutDeliveryFee, this.order);
+            new Payment("BANK", paymentDataWithoutReferenceCode, this.order);
         });
         assertThrows(IllegalArgumentException.class, () -> {
-            new Payment("COD", paymentDataWithEmptyAddress, this.order);
+            new Payment("BANK", paymentDataWithEmptyBankName, this.order);
         });
         assertThrows(IllegalArgumentException.class, () -> {
-            new Payment("COD", paymentDataWithEmptyDeliveryFee, this.order);
+            new Payment("BANK", paymentDataWithEmptyReferenceCode, this.order);
         });
     }
 
@@ -138,11 +138,11 @@ public class PaymentTest {
     }
 
     @Test
-    void testCreateCODPaymentSuccess() {
-        Payment payment = new Payment("COD", this.codPaymentData, this.order);
+    void testCreateBankPaymentSuccess() {
+        Payment payment = new Payment("BANK", this.bankPaymentData, this.order);
         assertNotNull(payment.getId(), "Payment id should not be null");
         assertEquals("SUCCESS", payment.getStatus());
-        assertSame(this.codPaymentData, payment.getPaymentData());
+        assertSame(this.bankPaymentData, payment.getPaymentData());
         assertSame(this.order, payment.getOrder());
     }
 }
