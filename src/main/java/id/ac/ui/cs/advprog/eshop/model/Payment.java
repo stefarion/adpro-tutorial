@@ -1,5 +1,8 @@
 package id.ac.ui.cs.advprog.eshop.model;
 
+import id.ac.ui.cs.advprog.eshop.enums.PaymentMethod;
+import id.ac.ui.cs.advprog.eshop.enums.PaymentStatus;
+
 import java.util.Map;
 import java.util.UUID;
 import lombok.Getter;
@@ -16,7 +19,7 @@ public class Payment {
         this.id = UUID.randomUUID().toString();
         this.paymentData = paymentData;
         this.setMethod(method);
-        this.setStatus("SUCCESS");
+        this.setStatus(PaymentStatus.SUCCESS.getValue());
         this.setPaymentData(paymentData);
         if (order == null) {
             throw new IllegalArgumentException();
@@ -26,7 +29,7 @@ public class Payment {
     }
 
     public void setMethod(String method) {
-        if (method.equals("VOUCHER") || method.equals("COD")) {
+        if (PaymentMethod.contains(method)) {
             this.method = method;
         } else {
             throw new IllegalArgumentException();
@@ -34,7 +37,7 @@ public class Payment {
     }
 
     public void setStatus(String status) {
-        if (status.equals("SUCCESS") || status.equals("REJECTED")) {
+        if (PaymentStatus.contains(status)) {
             this.status = status;
         } else {
             throw new IllegalArgumentException();
@@ -44,8 +47,10 @@ public class Payment {
     public void setPaymentData(Map<String, String> paymentData) {
         if (paymentData == null) {
             throw new IllegalArgumentException();
-        } else if (this.method.equals("VOUCHER")) {
-            if (paymentData.get("voucherCode").length() != 16) {
+        } else if (this.method.equals(PaymentMethod.VOUCHER.getValue())) {
+            if (paymentData.get("voucherCode") == null) {
+                throw new IllegalArgumentException();
+            } else if (paymentData.get("voucherCode").length() != 16) {
                 throw new IllegalArgumentException();
             } else if (!paymentData.get("voucherCode").startsWith("ESHOP")) {
                 throw new IllegalArgumentException();
@@ -61,7 +66,7 @@ public class Payment {
                 }
                 this.paymentData = paymentData;
             }
-        } else if (this.method.equals("COD")) {
+        } else if (this.method.equals(PaymentMethod.COD.getValue())) {
             if (paymentData.get("address") == null || paymentData.get("deliveryFee") == null) {
                 throw new IllegalArgumentException();
             } else if (paymentData.get("address").isEmpty() || paymentData.get("deliveryFee").isEmpty()) {
