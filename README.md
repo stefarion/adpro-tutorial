@@ -10,6 +10,7 @@ Check out the website here: [stefarion-adpro-tutorial-eshop.koyeb.app](https://s
 - [Modul 1](#modul-1)
 - [Modul 2](#modul-2)
 - [Modul 3](#modul-3)
+- [Modul 4](#modul-4)
 
 ## Modul 1
 ### Reflection 1.1
@@ -52,4 +53,10 @@ Sebelumnya, saya mohon izin *update* perkembangan EShop dari rencana sebelumnya.
 3) **Explain the disadvantages of not applying SOLID principles to your project with examples.**
    * Kode saya akan lebih sulit untuk di-*maintain*. Sebagai contoh, bila model `Product` dan `ProductRepository` digabung, model harus ikut diuji untuk logika *instance* dan *repository* harus ikut diuji untuk atribut produk. Hal ini akan mengakibatkan kode saya menjadi lebih kompleks dan meningkatkan potensi *bug* dan *error*.
    * Jika `RepositoryInterface` tidak diimplementasikan, akan menyulitkan pengembangan dan ekstensi *codebase*. Saya akan terpaksa memodifikasi kode yang sudah ada dan ada kemungkinan implementasi *method*-*method* yang tidak diperlukan jika saya membuat repositori baru. 
-   * Jika modul `CarController` langsung bergantung pada *class* yang *concrete* seperti `CarServiceImpl`, saya bisa menemui kesulitan untuk mengembangkan *codebase* saya karena terjadi *tight coupling* antara *controller* dan implementasi.  
+   * Jika modul `CarController` langsung bergantung pada *class* yang *concrete* seperti `CarServiceImpl`, saya bisa menemui kesulitan untuk mengembangkan *codebase* saya karena terjadi *tight coupling* antara *controller* dan implementasi.
+
+## Modul 4
+1. **Reflect based on Percival (2017) proposed self-reflective questions (in “Principles and Best Practice of Testing” submodule, chapter “Evaluating Your Testing Objectives”), whether this TDD flow is useful enough for you or not. If not, explain things that you need to do next time you make more tests.**
+* Selama saya mengerjakan tutorial dan *exercise* modul 4 ini, saya rasa dengan penerapan TDD *flow* membantu saya lebih memahami pentingnya menulis *unit tests* sebelum mengimplementasi kode. Tentu ini merupakan wawasan baru bagi saya. Manfaatnya adalah saya dapat mengukur semua potensi masalah yang dapat terjadi, kemudian itu menjadi patokan saya untuk memikirkan solusinya dalam bentuk struktur dan *method class*. Saya juga merasa terbantu dalam melatih membuat *unit test* lebih terfokus. Namun, saya rasa masih butuh latihan lagi untuk lebih mengerti TDD *flow* dan *best practice testing* kode.
+2. **You have created unit tests in Tutorial. Now reflect whether your tests have successfully followed F.I.R.S.T. principle or not. If not, explain things that you need to do the next time you create more tests.**
+* Saya rasa *unit tests* yang telah saya buat sudah mengimplementasikan prinsip-prinsip F.I.R.S.T. ***Fast*** karena tiap *unit test* berjalan secara terpisah. ***Independent*** karena tiap *unit test* tidak bergantung pada tes yang lain. ***Repeatable*** karena tiap *unit test* tidak bergantung pada tes yang lain, sehingga dapat dicoba berulang kali untuk kode terkait. ***Self-validating*** karena tiap *unit test* mengecek hasil kode yang sedang diuji. ***Timely*** karena *unit tests* dibuat sebelum implementasi kode.
