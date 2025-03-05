@@ -8,18 +8,20 @@ import id.ac.ui.cs.advprog.eshop.enums.OrderStatus;
 import id.ac.ui.cs.advprog.eshop.enums.PaymentStatus;
 import id.ac.ui.cs.advprog.eshop.model.Order;
 import id.ac.ui.cs.advprog.eshop.model.Payment;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class PaymentRepository {
     private List<Payment> paymentData = new ArrayList<>();
 
     public Payment addPayment(
-            Order order, String method, Map<String, String> paymentData) throws IllegalArgumentException {
+            Order order, String method, Map<String, String> paymentData) {
         Payment payment = new Payment(method, paymentData, order);
         this.paymentData.add(payment);
         return payment;
     }
 
-    public Payment setStatus(Payment payment, String status) throws IllegalArgumentException {
+    public Payment setStatus(Payment payment, String status) {
         if (!PaymentStatus.contains(status)) {
             throw new IllegalArgumentException();
         }
