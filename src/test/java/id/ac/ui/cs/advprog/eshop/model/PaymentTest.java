@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import id.ac.ui.cs.advprog.eshop.enums.PaymentStatus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,18 +65,19 @@ public class PaymentTest {
         paymentDataWithLessThanSixteenCharacters.put("voucherCode", "ESHOP1234ABC567");
         paymentDataWithGreaterThanSixteenCharacters.put("voucherCode", "ESHOP1234ABC56781234");
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            new Payment("VOUCHER", paymentDataWithoutESHOPPrefix, this.order);
-        });
-        assertThrows(IllegalArgumentException.class, () -> {
-            new Payment("VOUCHER", paymentDataWithoutEightNumbers, this.order);
-        });
-        assertThrows(IllegalArgumentException.class, () -> {
-            new Payment("VOUCHER", paymentDataWithLessThanSixteenCharacters, this.order);
-        });
-        assertThrows(IllegalArgumentException.class, () -> {
-            new Payment("VOUCHER", paymentDataWithGreaterThanSixteenCharacters, this.order);
-        });
+        Payment paymentWithoutESHOPPrefix = new Payment("VOUCHER",
+                paymentDataWithoutESHOPPrefix, this.order);
+        Payment paymentWithoutEightNumbers = new Payment("VOUCHER",
+                paymentDataWithoutEightNumbers, this.order);
+        Payment paymentWithLessThanSixteenCharacters = new Payment("VOUCHER",
+                paymentDataWithLessThanSixteenCharacters, this.order);
+        Payment paymentWithGreaterThanSixteenCharacters = new Payment("VOUCHER",
+                paymentDataWithGreaterThanSixteenCharacters, this.order);
+
+        assertEquals(PaymentStatus.REJECTED.getValue(), paymentWithoutESHOPPrefix.getStatus());
+        assertEquals(PaymentStatus.REJECTED.getValue(), paymentWithoutEightNumbers.getStatus());
+        assertEquals(PaymentStatus.REJECTED.getValue(), paymentWithLessThanSixteenCharacters.getStatus());
+        assertEquals(PaymentStatus.REJECTED.getValue(), paymentWithGreaterThanSixteenCharacters.getStatus());
     }
 
     @Test
@@ -92,18 +94,19 @@ public class PaymentTest {
         paymentDataWithEmptyReferenceCode.put("referenceCode", "");
         paymentDataWithEmptyReferenceCode.put("bankName", "BCA");
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            new Payment("BANK", paymentDataWithoutBankName, this.order);
-        });
-        assertThrows(IllegalArgumentException.class, () -> {
-            new Payment("BANK", paymentDataWithoutReferenceCode, this.order);
-        });
-        assertThrows(IllegalArgumentException.class, () -> {
-            new Payment("BANK", paymentDataWithEmptyBankName, this.order);
-        });
-        assertThrows(IllegalArgumentException.class, () -> {
-            new Payment("BANK", paymentDataWithEmptyReferenceCode, this.order);
-        });
+        Payment paymentWithoutBankName = new Payment("BANK",
+                paymentDataWithoutBankName, this.order);
+        Payment paymentWithoutReferenceCode = new Payment("BANK",
+                paymentDataWithoutReferenceCode, this.order);
+        Payment paymentWithEmptyBankName = new Payment("BANK",
+                paymentDataWithEmptyBankName, this.order);
+        Payment paymentWithEmptyReferenceCode = new Payment("BANK",
+                paymentDataWithEmptyReferenceCode, this.order);
+
+        assertEquals(PaymentStatus.REJECTED.getValue(), paymentWithoutBankName.getStatus());
+        assertEquals(PaymentStatus.REJECTED.getValue(), paymentWithoutReferenceCode.getStatus());
+        assertEquals(PaymentStatus.REJECTED.getValue(), paymentWithEmptyBankName.getStatus());
+        assertEquals(PaymentStatus.REJECTED.getValue(), paymentWithEmptyReferenceCode.getStatus());
     }
 
     @Test
