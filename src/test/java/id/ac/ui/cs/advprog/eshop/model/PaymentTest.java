@@ -132,7 +132,7 @@ public class PaymentTest {
     }
 
     @Test
-    void testCreateVoucherPaymentSuccess() {
+    void testCreateVoucherPaymentWaiting() {
         Payment payment = new Payment("VOUCHER", this.voucherPaymentData, this.order);
         assertNotNull(payment.getId(), "Payment id should not be null");
         assertEquals("WAITING", payment.getStatus());
@@ -141,7 +141,7 @@ public class PaymentTest {
     }
 
     @Test
-    void testCreateBankPaymentSuccess() {
+    void testCreateBankPaymentWaiting() {
         Payment payment = new Payment("BANK", this.bankPaymentData, this.order);
         assertNotNull(payment.getId(), "Payment id should not be null");
         assertEquals("WAITING", payment.getStatus());

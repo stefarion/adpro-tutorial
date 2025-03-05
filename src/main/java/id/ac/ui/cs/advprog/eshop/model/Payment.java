@@ -17,9 +17,7 @@ public class Payment {
 
     public Payment(String method, Map<String, String> paymentData, Order order) {
         this.id = UUID.randomUUID().toString();
-        this.paymentData = paymentData;
         this.setMethod(method);
-        this.setStatus(PaymentStatus.WAITING.getValue());
         this.setPaymentData(paymentData);
         if (order == null) {
             throw new IllegalArgumentException();
@@ -47,32 +45,33 @@ public class Payment {
     public void setPaymentData(Map<String, String> paymentData) {
         if (paymentData == null) {
             throw new IllegalArgumentException();
-        } else if (this.method.equals(PaymentMethod.VOUCHER.getValue())) {
-            if (paymentData.get("voucherCode") == null) {
-                throw new IllegalArgumentException();
-            } else if (paymentData.get("voucherCode").length() != 16) {
-                throw new IllegalArgumentException();
-            } else if (!paymentData.get("voucherCode").startsWith("ESHOP")) {
-                throw new IllegalArgumentException();
-            } else {
-                int digitCount = 0;
-                for (int i = 0; i < paymentData.get("voucherCode").length(); i++) {
-                    if (Character.isDigit(paymentData.get("voucherCode").charAt(i))) {
-                        digitCount += 1;
-                    }
+        }
+        this.paymentData = paymentData;
+        if (this.method.equals(PaymentMethod.VOUCHER.getValue())) {
+            if (paymentData.get("voucherCode") == null ||
+                    paymentData.get("voucherCode").length() != 16 ||
+                    !paymentData.get("voucherCode").startsWith("ESHOP")) {
+                this.setStatus(PaymentStatus.REJECTED.getValue());
+                return;
+            }
+            int digitCount = 0;
+            for (int i = 0; i < paymentData.get("voucherCode").length(); i++) {
+                if (Character.isDigit(paymentData.get("voucherCode").charAt(i))) {
+                    digitCount += 1;
                 }
-                if (digitCount != 8) {
-                    throw new IllegalArgumentException();
-                }
-                this.paymentData = paymentData;
+            }
+            if (digitCount != 8) {
+                this.setStatus(PaymentStatus.REJECTED.getValue());
+                return;
             }
         } else if (this.method.equals(PaymentMethod.BANK.getValue())) {
             String bankName = paymentData.get("bankName");
             String referenceCode = paymentData.get("referenceCode");
             if (bankName == null || bankName.isBlank() || referenceCode == null || referenceCode.isBlank()){
-                throw new IllegalArgumentException();
+                this.setStatus(PaymentStatus.REJECTED.getValue());
+                return;
             }
-            this.paymentData = paymentData;
         }
+        this.setStatus(PaymentStatus.WAITING.getValue());
     }
 }
