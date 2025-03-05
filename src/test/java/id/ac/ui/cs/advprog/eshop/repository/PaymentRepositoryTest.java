@@ -125,18 +125,30 @@ public class PaymentRepositoryTest {
         paymentDataWithLessThanSixteenCharacters.put("voucherCode", "ESHOP1234ABC567");
         paymentDataWithGreaterThanSixteenCharacters.put("voucherCode", "ESHOP1234ABC56781234");
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            paymentRepository.addPayment(order1, PaymentMethod.VOUCHER.getValue(), paymentDataWithoutESHOPPrefix);
-        });
-        assertThrows(IllegalArgumentException.class, () -> {
-            paymentRepository.addPayment(order1, PaymentMethod.VOUCHER.getValue(), paymentDataWithoutEightNumbers);
-        });
-        assertThrows(IllegalArgumentException.class, () -> {
-            paymentRepository.addPayment(order1, PaymentMethod.VOUCHER.getValue(), paymentDataWithLessThanSixteenCharacters);
-        });
-        assertThrows(IllegalArgumentException.class, () -> {
-            paymentRepository.addPayment(order1, PaymentMethod.VOUCHER.getValue(), paymentDataWithGreaterThanSixteenCharacters);
-        });
+        Payment paymentWithoutESHOPPrefix = paymentRepository.addPayment(order1, PaymentMethod.VOUCHER.getValue(),
+                paymentDataWithoutESHOPPrefix);
+        Payment paymentWithoutEightNumbers = paymentRepository.addPayment(order1, PaymentMethod.VOUCHER.getValue(),
+                paymentDataWithoutEightNumbers);
+        Payment paymentWithLessThanSixteenCharacters = paymentRepository.addPayment(order1,
+                PaymentMethod.VOUCHER.getValue(),
+                paymentDataWithLessThanSixteenCharacters);
+        Payment paymentWithGreaterThanSixteenCharacters = paymentRepository.addPayment(order1,
+                PaymentMethod.VOUCHER.getValue(),
+                paymentDataWithGreaterThanSixteenCharacters);
+
+        assertEquals(PaymentStatus.REJECTED.getValue(), paymentWithoutESHOPPrefix.getStatus());
+        assertEquals(PaymentStatus.REJECTED.getValue(), paymentWithoutEightNumbers.getStatus());
+        assertEquals(PaymentStatus.REJECTED.getValue(), paymentWithLessThanSixteenCharacters.getStatus());
+        assertEquals(PaymentStatus.REJECTED.getValue(), paymentWithGreaterThanSixteenCharacters.getStatus());
+
+        boolean allRejected = true;
+        for (Payment payment : paymentRepository.getAllPayments()) {
+            if (!payment.getStatus().equals(PaymentStatus.REJECTED.getValue())) {
+                allRejected = false;
+                break;
+            }
+        }
+        assertEquals(true, allRejected);
     }
 
     @Test
@@ -153,17 +165,27 @@ public class PaymentRepositoryTest {
         paymentDataWithEmptyReferenceCode.put("referenceCode", "");
         paymentDataWithEmptyReferenceCode.put("bankName", "BCA");
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            paymentRepository.addPayment(order1, PaymentMethod.BANK.getValue(), paymentDataWithoutBankName);
-        });
-        assertThrows(IllegalArgumentException.class, () -> {
-            paymentRepository.addPayment(order1, PaymentMethod.BANK.getValue(), paymentDataWithoutReferenceCode);
-        });
-        assertThrows(IllegalArgumentException.class, () -> {
-            paymentRepository.addPayment(order1, PaymentMethod.BANK.getValue(), paymentDataWithEmptyBankName);
-        });
-        assertThrows(IllegalArgumentException.class, () -> {
-            paymentRepository.addPayment(order1, PaymentMethod.BANK.getValue(), paymentDataWithEmptyReferenceCode);
-        });
+        Payment paymentWithoutBankName = paymentRepository.addPayment(order1, PaymentMethod.BANK.getValue(),
+                paymentDataWithoutBankName);
+        Payment paymentWithoutReferenceCode = paymentRepository.addPayment(order1, PaymentMethod.BANK.getValue(),
+                paymentDataWithoutReferenceCode);
+        Payment paymentWithEmptyBankName = paymentRepository.addPayment(order1, PaymentMethod.BANK.getValue(),
+                paymentDataWithEmptyBankName);
+        Payment paymentWithEmptyReferenceCode = paymentRepository.addPayment(order1, PaymentMethod.BANK.getValue(),
+                paymentDataWithEmptyReferenceCode);
+
+        assertEquals(PaymentStatus.REJECTED.getValue(), paymentWithoutBankName.getStatus());
+        assertEquals(PaymentStatus.REJECTED.getValue(), paymentWithoutReferenceCode.getStatus());
+        assertEquals(PaymentStatus.REJECTED.getValue(), paymentWithEmptyBankName.getStatus());
+        assertEquals(PaymentStatus.REJECTED.getValue(), paymentWithEmptyReferenceCode.getStatus());
+
+        boolean allRejected = true;
+        for (Payment payment : paymentRepository.getAllPayments()) {
+            if (!payment.getStatus().equals(PaymentStatus.REJECTED.getValue())) {
+                allRejected = false;
+                break;
+            }
+        }
+        assertEquals(true, allRejected);
     }
 }
